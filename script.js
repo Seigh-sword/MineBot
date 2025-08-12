@@ -1,9 +1,16 @@
 let playerName = '';
 let apiKey = '';
 
+function caesarShiftDecode(str, shift) {
+  return str.split('').map(char => 
+    String.fromCharCode(char.charCodeAt(0) - shift)
+  ).join('');
+}
+
 async function loadApiKey() {
   const res = await fetch('API.txt');
-  apiKey = (await res.text()).trim();
+  const encodedKey = (await res.text()).trim();
+  apiKey = caesarShiftDecode(encodedKey, 5); // decode the gibberish
 }
 
 document.getElementById('saveName').addEventListener('click', () => {
